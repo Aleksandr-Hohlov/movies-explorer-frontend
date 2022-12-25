@@ -1,0 +1,74 @@
+.header__movies {
+  max-width: 1140px;
+  min-height: 74px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+}
+
+.header__logo-movies {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+}
+
+.header__films {
+  transition: .3s;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  margin-right: 16px;
+  color: #000000;
+}
+
+.header__films_active {
+  font-weight: 500;
+}
+
+.active {
+  font-weight: 500;
+}
+
+.header__films:hover {
+  opacity: .8;
+}
+
+.header__account-btn {
+  transition: .3s;
+  width: 100px;
+  height: 32px;
+  background: url('../../../images/btn__profile.png') white no-repeat;
+  background-position: right;
+  border-radius: 15px;
+  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 12px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  box-sizing: border-box;
+  color: #000000;
+}
+
+.header__account-btn:hover {
+  opacity: .8;
+}
+
+@media screen and (max-width: 800px) {
+  .header__account-btn {
+    background: url('../../../images/icon__burger.svg') no-repeat transparent;
+    color: transparent;
+    width: 44px;
+    height: 44px;
+    box-shadow: none;
+  }
+
+  .header__films {
+    visibility: hidden;
+  }
+}
+
+

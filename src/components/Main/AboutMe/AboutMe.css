@@ -1,0 +1,93 @@
+.about-me {
+  padding: 110px 0px 100px;
+}
+
+.about-me__container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 66px;
+  column-gap: 50px;
+}
+
+.about-me__info {
+  max-width: 53%;
+}
+
+
+.about-me__student-name {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 116%;
+  letter-spacing: -0.04em;
+  margin-bottom: 18px;
+  margin-top: 0px;
+}
+
+.about-me__subtitle {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  mix-blend-mode: normal;
+  margin-bottom: 26px;
+  margin-top: 0px;
+}
+
+.about-me__text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  mix-blend-mode: normal;
+  margin-bottom: 99px;
+  margin-top: 0px;
+  text-align: justify;
+}
+
+.about-me__github {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  transition: .3s;
+}
+
+.about-me__github:hover {
+  opacity: .8;
+}
+
+.about-me__foto {
+  max-width: 270px;
+  max-height: 327px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 400px) {
+  .about-me__container {
+    flex-direction: column-reverse;
+  }
+
+  .about-me__student-name {
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .about-me__subtitle {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .about-me__text {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .about-me__info {
+    max-width: 100%;
+  }
+
+  .about-me__foto {
+    max-width: 100%;
+
+  }
+}
