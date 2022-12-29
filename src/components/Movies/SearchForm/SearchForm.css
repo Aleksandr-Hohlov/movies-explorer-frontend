@@ -1,7 +1,6 @@
 .search-form {
   max-width: 1140px;
   margin: auto;
-  display: flex;
 }
 
 .search-form__container {
