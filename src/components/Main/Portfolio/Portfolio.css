@@ -43,3 +43,15 @@
 .portfolio__element-link:hover {
   opacity: .8;
 }
+
+@media screen and (max-width: 500px) {
+  .portfolio__list {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .portfolio__element-link {
+    background-size: 18px;
+    background-position: 100% 20%;
+  }
+}

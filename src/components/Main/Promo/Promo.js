@@ -3,8 +3,8 @@ import './Promo.css';
 
 function Promo() {
   return (
-    <article className="promo__title">
-      <div className="promo__title-text">Учебный проект студента факультета Веб-разработки.</div>
+    <article className="promo">
+      <div className="promo__text">Учебный проект студента факультета Веб-разработки.</div>
     </article>
   );
 }

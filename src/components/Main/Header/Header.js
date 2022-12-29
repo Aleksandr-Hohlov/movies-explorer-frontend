@@ -5,17 +5,17 @@ import './Header.css';
 
 function Header() {
   return (
-    <header className="header__main">
-      <div className="header__container">
-        <Link className="header__logo-link" to="/">
-          <img className="header__logo-main" src={logo} alt="Лого" />
+    <header className="header-main">
+      <div className="header-main__container">
+        <Link className="header-main__link" to="/movies">
+          <img className="header-main__logo" src={logo} alt="Лого" />
         </Link>
 
-        <div className="header__auth-main">
-          <Link className="header__registry" to="/signup">
+        <div className="header-main__auth">
+          <Link className="header-main__registry" to="/signup">
             Регистрация
           </Link>
-          <Link className="header__login" to="/signin">
+          <Link className="header-main__login" to="/signin">
             Войти
           </Link>
         </div>

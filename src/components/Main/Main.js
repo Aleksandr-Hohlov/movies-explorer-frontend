@@ -11,18 +11,20 @@ import Footer from './Footer/Footer';
 
 function Main() {
   return (
-    <main className="main">
+    <div className="main">
       <Header />
-      <Promo />
-      <NavTab />
-      <div className="main__content">
-        <AboutProject />
-        <Techs />
-        <AboutMe />
-        <Portfolio />
-        <Footer />
-      </div>
-    </main>
+      <main className="main__content">
+        <Promo />
+        <NavTab />
+        <div className="main__project">
+          <AboutProject />
+          <Techs />
+          <AboutMe />
+          <Portfolio />
+        </div>
+      </main>
+      <Footer />
+    </div>
   );
 }
 export default Main;

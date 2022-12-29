@@ -7,7 +7,7 @@ function Login() {
   return (
     <main className="login">
       <header className="login__header">
-        <Link className="register__header-link" to="/">
+        <Link className="login__header-link" to="/">
           <img className="login__header-logo" src={logo} alt="Лого" />
         </Link>
         <h1 className="login__header-title">Рады видеть!</h1>

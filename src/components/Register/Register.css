@@ -109,7 +109,10 @@
   .register {
     margin: 50px auto;
     padding: 0px 30px;
-    max-width: 260px;
     width: 100%;
+  }
+
+  .register__header {
+    text-align: center;
   }
 }

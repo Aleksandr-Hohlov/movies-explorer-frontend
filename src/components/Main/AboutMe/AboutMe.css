@@ -7,6 +7,7 @@
   justify-content: space-between;
   margin-top: 66px;
   column-gap: 50px;
+
 }
 
 .about-me__info {
@@ -48,6 +49,8 @@
   font-size: 14px;
   line-height: 17px;
   transition: .3s;
+  color: black;
+  text-decoration: none;
 }
 
 .about-me__github:hover {
@@ -61,9 +64,10 @@
   object-fit: cover;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 600px) {
   .about-me__container {
     flex-direction: column-reverse;
+    row-gap: 40px;
   }
 
   .about-me__student-name {
@@ -83,11 +87,11 @@
   }
 
   .about-me__info {
-    max-width: 100%;
+    max-width: 352px;
   }
 
   .about-me__foto {
-    max-width: 100%;
-
+    max-width: 352px;
+    align-items: center;
   }
 }

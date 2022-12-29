@@ -8,19 +8,31 @@
 }
 
 .navtab__link {
-  transition: .3s;
-  border: none;
-  background-color: transparent;
+  margin-right: 40px;
+}
+
+.navtab__link:last-of-type {
+  margin-right: 0px;
+}
+
+.navtab__link-element {
   color: #000000;
+  transition: .3s;
   font-weight: 500;
   font-size: 13px;
   line-height: 16px;
   align-items: center;
-  text-decoration-line: underline;
   padding: 0;
-  margin-right: 40px;
 }
 
 .navtab__link:hover {
   opacity: .8;
 }
+
+@media screen and (max-width: 450px) {
+  .navtab__link {
+    margin-right: 24px;
+  }
+}
+
+

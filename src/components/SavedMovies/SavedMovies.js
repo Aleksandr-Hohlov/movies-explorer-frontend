@@ -7,7 +7,7 @@ import MoviesCardList from './MoviesCardList/MoviesCardList';
 
 function SavedMovies() {
   return (
-    <div className="saved-movies__page">
+    <div className="saved-movies">
       <Header />
       <main className="saved-movies__content">
         <SearchForm />

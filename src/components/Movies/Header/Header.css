@@ -1,73 +1,97 @@
-.header__movies {
+.header-movies {
   max-width: 1140px;
   min-height: 74px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: auto;
+  padding: 0px 70px;
 }
 
-.header__logo-movies {
+.header-movies__logo {
   width: 38px;
   height: 38px;
   padding: 0;
 }
 
-.header__films {
+.header-movies__films {
   transition: .3s;
   font-weight: 400;
   font-size: 13px;
   line-height: 18px;
   margin-right: 16px;
   color: #000000;
+  text-decoration: none;
 }
 
-.header__films_active {
+.header-movies__films_active {
   font-weight: 500;
 }
 
-.active {
+.header-movies__films.active {
   font-weight: 500;
 }
 
-.header__films:hover {
+.header-movies__films:hover {
   opacity: .8;
 }
 
-.header__account-btn {
+.header-movies__account-btn {
+  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
+  font-size: 13px;
+  line-height: 12px;
+  border-radius: 15px;
   transition: .3s;
   width: 100px;
   height: 32px;
-  background: url('../../../images/btn__profile.png') white no-repeat;
-  background-position: right;
-  border-radius: 15px;
-  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 12px;
-  text-decoration: none;
   display: flex;
   align-items: center;
-  padding-left: 10px;
-  box-sizing: border-box;
+  justify-content: space-around;
   color: #000000;
+  text-decoration: none;
 }
 
-.header__account-btn:hover {
+.header-movies__account-icon {
+  background-repeat: no-repeat;
+  background-color: #F4F4F4;
+  border-radius: 15px;
+  background-image: url('../../../images/btn__profile-icon.svg');
+  background-position: center;
+  width: 26px;
+  height: 26px;
+}
+
+.header-movies__account-btn:hover {
   opacity: .8;
 }
 
+.header-movies__sidenav {
+  visibility: hidden;
+  position: absolute
+}
+
 @media screen and (max-width: 800px) {
-  .header__account-btn {
-    background: url('../../../images/icon__burger.svg') no-repeat transparent;
-    color: transparent;
-    width: 44px;
-    height: 44px;
-    box-shadow: none;
+  .header-movies__account-btn {
+    visibility: hidden;
   }
 
-  .header__films {
+  .header-movies__films {
     visibility: hidden;
+  }
+
+  .header-movies__sidenav {
+    visibility: visible;
+    position: relative;
+  }
+
+  .header-movies {
+    padding: 0px 30px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .header-movies {
+    padding: 0px 14px;
   }
 }
 
