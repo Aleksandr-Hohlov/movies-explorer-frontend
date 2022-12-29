@@ -12,11 +12,11 @@ function Profile() {
         <form className="profile__form">
           <div className="profile__container-name">
             <p className="profile__name">Имя</p>
-            <input className="profile__input" value="Виталий" />
+            <input className="profile__input" value="Виталий" minLength="3" maxLength="35" required />
           </div>
           <div className="profile__container-email">
             <p className="profile__name">E-mail</p>
-            <input className="profile__input" value="pochta@yandex.ru" />
+            <input className="profile__input" value="pochta@yandex.ru" minLength="3" maxLength="35" required />
           </div>
           <button className="profile__button" type="submit">
             Редактировать

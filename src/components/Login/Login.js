@@ -15,11 +15,11 @@ function Login() {
       <fieldset className="login__fieldset">
         <form className="login__form">
           <h3 className="login__form-title">E-mail</h3>
-          <input className="login__form-input" type="e-mail" />
+          <input className="login__form-input" type="e-mail" minLength="3" maxLength="35" required />
           <span className="login__input-error"></span>
 
           <h3 className="login__form-title">Пароль</h3>
-          <input className="login__form-input" type="password" />
+          <input className="login__form-input" type="password" minLength="3" maxLength="35" required />
           <span className="login__input-error"></span>
 
           <button className="login__button" type="submit">

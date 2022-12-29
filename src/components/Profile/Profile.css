@@ -1,6 +1,6 @@
 .profile {
   margin: auto;
-  padding: 0px 70px;
+  max-width: 1140px;
 
 }
 
@@ -75,7 +75,7 @@
 }
 
 @media screen and (max-width: 800px) {
-  .profile {
+  .profile__content {
     padding: 0px 30px;
   }
 }

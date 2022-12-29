@@ -16,15 +16,15 @@ function Register() {
       <fieldset className="register__fieldset">
         <form className="register__form">
           <h3 className="register__form-title">Имя</h3>
-          <input className="register__form-input" type="text"></input>
+          <input className="register__form-input" type="text" minLength="3" maxLength="35" required></input>
           <span className="register__input-error"></span>
 
           <h3 className="register__form-title">E-mail</h3>
-          <input className="register__form-input" type="e-mail"></input>
+          <input className="register__form-input" type="e-mail" minLength="3" maxLength="35" required></input>
           <span className="register__input-error"></span>
 
           <h3 className="register__form-title">Пароль</h3>
-          <input className="register__form-input" type="password"></input>
+          <input className="register__form-input" type="password" minLength="3" maxLength="35" required></input>
           <span className="register__input-error"></span>
 
           <button className="register__button" type="submit">
