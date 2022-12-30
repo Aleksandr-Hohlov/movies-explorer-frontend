@@ -15,12 +15,6 @@
   position: relative;
 }
 
-.search-form__container-element {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
 .search-form__form {
   width: 100%;
   white-space: nowrap;

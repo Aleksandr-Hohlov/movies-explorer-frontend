@@ -77,6 +77,8 @@
 
   .header-movies__films {
     visibility: hidden;
+    display: flex;
+    flex-flow: wrap;
   }
 
   .header-movies__sidenav {
