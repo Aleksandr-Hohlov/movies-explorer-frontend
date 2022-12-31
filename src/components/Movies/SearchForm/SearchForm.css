@@ -74,6 +74,11 @@
   border: none;
   padding: 0;
   cursor: pointer;
+  transition: .3s;
+}
+
+.search-form__submit-btn:hover {
+  opacity: .8;
 }
 
 .search-form__toggle-switch {

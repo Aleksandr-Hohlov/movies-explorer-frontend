@@ -64,7 +64,7 @@
   object-fit: cover;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 650px) {
   .about-me__container {
     flex-direction: column-reverse;
     row-gap: 40px;

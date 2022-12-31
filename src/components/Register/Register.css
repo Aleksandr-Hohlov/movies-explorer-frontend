@@ -1,8 +1,12 @@
 .register {
-  margin: 70px auto;
-  padding: 0px 70px;
+  margin: auto;
   max-width: 400px;
   width: 100%;
+  box-sizing: border-box;
+}
+
+.register__header {
+  padding-top: 56px;
 }
 
 .register__header-title {
@@ -105,14 +109,28 @@
   opacity: .8;
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 600px) {
   .register {
-    margin: 50px auto;
     padding: 0px 30px;
     width: 100%;
   }
 
   .register__header {
     text-align: center;
+  }
+
+  .register__login-message {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .register__login-link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .register__button {
+    font-size: 12px;
+    line-height: 15px;
   }
 }
