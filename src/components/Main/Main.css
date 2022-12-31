@@ -1,0 +1,36 @@
+.main__project {
+  margin: auto;
+  max-width: 1140px;
+  padding: 0px 70px;
+}
+
+.main-title {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+
+  border-bottom: 1px solid;
+  max-width: 1140px;
+  margin: 0px;
+  padding-bottom: 23px;
+}
+
+@media screen and (max-width: 800px) {
+  .main__project {
+    padding: 0px 30px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .main__project {
+    padding: 0px 10px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .main-title {
+    font-size: 18px;
+  }
+}

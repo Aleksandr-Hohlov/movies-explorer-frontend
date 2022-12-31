@@ -1,0 +1,39 @@
+.promo {
+  background: #DDDEE3;
+  min-height: 524px;
+  background-image: url('../../../images/Promo_background.svg');
+  background-repeat: no-repeat;
+  background-position: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.promo__text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  text-align: center;
+  letter-spacing: -0.04em;
+  color: #000000;
+  text-align: center;
+  max-width: 730px;
+  margin: auto;
+
+}
+
+@media screen and (max-width: 450px) {
+  .promo__text {
+    font-weight: 400;
+    font-size: 31px;
+    line-height: 39px;
+  }
+
+  .promo {
+    min-height: 524px;
+    background-size: 80%;
+  }
+
+}
+
+
