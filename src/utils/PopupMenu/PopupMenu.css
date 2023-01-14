@@ -1,0 +1,123 @@
+.popup-menu__container {
+  align-items: center;
+  background-color: rgba(0,0,0,.5);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  right: 0;
+  left: 0;
+  position: fixed;
+  top: 0;
+  visibility: hidden;
+  z-index: 1;
+  width: 0;
+  transition: 0.3s width;
+}
+
+.popup-menu__container_opened {
+  visibility: visible;
+  width: 100%;
+}
+
+/* The side navigation menu */
+.popup-menu__sidenav {
+  height: 100%; /* 100% Full-height */
+  position: fixed; /* Stay in place */
+  top: 0; /* Stay at the top */
+  right: 0;
+  width: 67%;
+  background-color: #FAFAFA; /* background-color*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 160px; /* Place content 60px from the top */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: .3s width;
+}
+
+/* The navigation menu links */
+.popup-menu__navlink {
+  margin-bottom: 28px;
+  text-decoration: none;
+  display: block;
+  transition: .3s opacity;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #000000;
+}
+
+.popup-menu__navlink_account {
+  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
+  font-size: 13px;
+  line-height: 12px;
+  border-radius: 15px;
+  width: 100px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: inherit;
+  bottom: 0;
+  margin-bottom: 87px;
+}
+
+.popup-menu__account-icon {
+  background-repeat: no-repeat;
+  background-color: #F4F4F4;
+  border-radius: 15px;
+  background-image: url('../../images/btn__profile-icon.svg');
+  background-position: center;
+  width: 26px;
+  height: 26px;
+}
+
+/* When you mouse over the navigation links, change their color */
+.popup-menu__navlink:hover {
+  opacity: .8;
+}
+
+.popup-menu__navlink_active {
+  text-decoration: underline 2px;
+  text-underline-offset: 8px;
+}
+
+.popup-menu__navlink.active {
+  text-decoration: underline 2px;
+  text-underline-offset: 8px;
+}
+
+/* Position and style the close button (top right corner) */
+.popup-menu__closebtn {
+  position: absolute;
+  top: 10px;
+  right: 22px;
+  font-size: 36px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+
+
+
+.popup-menu__openbtn {
+  transition: .3s;
+  background: url('../../images/icon__burger.svg') no-repeat transparent;
+  color: transparent;
+  width: 44px;
+  height: 44px;
+  padding-left: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.popup-menu__openbtn:hover {
+  opacity: .7;
+}
+
+@media screen and (max-width: 400px) {
+  .popup-menu__sidenav {
+    width: 100%;
+  }
+}
