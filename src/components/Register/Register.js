@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import './Register.css';
 import logo from '../../images/logo__header.svg';
 
-function Register({ handleRegister, isDataSet }) {
+function Register({ handleRegister }) {
   const [data, setData] = React.useState({
+    name: '',
     email: '',
     password: '',
-    name: '',
   });
 
   function handleChange(e) {
@@ -20,8 +20,8 @@ function Register({ handleRegister, isDataSet }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const { email, password, name } = data;
-    handleRegister(email, password, name);
+    const { name, email, password } = data;
+    handleRegister(name, email, password);
   }
 
   return (

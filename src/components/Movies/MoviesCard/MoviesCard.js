@@ -3,18 +3,23 @@ import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 import film from '../../../images/pic__film.png';
 import { CurrentUserContext } from '../../../contexts/CurrentUserContext';
+import { movieDuration } from '../../../utils/movieDuration';
 
-function MoviesCard({ movie, onCardLike, onCardDelete, savedMovies }) {
+function MoviesCard({ movie, onCardLike, onCardDelete }) {
   const currentUser = React.useContext(CurrentUserContext);
   const location = useLocation();
 
-  const isSaved = savedMovies.some((id) => id.movieId === movie.id && id.owner === currentUser._id);
+  const isSaved = true;
 
   function handleLikeClick() {
+    console.log('function handleLikeClick');
+    console.log(movie);
     onCardLike(movie);
   }
 
   function handleDeleteClick() {
+    console.log(movie);
+    console.log('function handleDeleteClick');
     onCardDelete(movie);
   }
 
@@ -28,11 +33,11 @@ function MoviesCard({ movie, onCardLike, onCardDelete, savedMovies }) {
         <h2 className="movies-card__title">{movie.nameRU}</h2>
         <button
           type="button"
-          className={`movies-card__button ${isSaved ? 'movies-card__button_like-active' : 'movies-card__button_like-disable'}`}
-          onClick={handleLikeClick}
+          className={`movies-card__button ${location.pathname === '/movies' ? 'movies-card__button_like-active' : 'movies-card__button-delete'}`}
+          onClick={location.pathname === '/movies' ? handleLikeClick : handleDeleteClick}
         ></button>
       </div>
-      <p className="movies-card__duration">{movie.duration}</p>
+      <p className="movies-card__duration">{movieDuration(movie.duration)}</p>
     </article>
   );
 }

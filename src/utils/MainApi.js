@@ -4,31 +4,19 @@ class MainApi {
   }
 
   /*проверка ответа сервера*/
-  _handleResponse(response) {
+  _checkResponse(response) {
     if (response.ok) return response.json();
     return Promise.reject(`Ошибка: ${response.status}`);
   }
 
-  /* получение контента после авторизации */
-  getMovies(token) {
-    return fetch(`${this._url}/users/me`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => data);
-  }
-
   /* получение информации о пользователе с сервера */
   getUserInfo() {
+    //console.log(localStorage.getItem('token'));
+    //console.log(localStorage.getItem('jwt'));
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
       headers: {
-        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
     }).then((res) => this._checkResponse(res));
@@ -96,32 +84,51 @@ class MainApi {
       },
     }).then((res) => this._checkResponse(res));
   }
-
-  /* регистрация */
-  register(name, email, password) {
-    return fetch(`${this._url}/signup`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, email, password }),
-    }).then((response) => this._handleResponse(response));
-  }
-
-  /* авторизация */
-  authorize(email, password) {
-    return fetch(`${this._url}/signin`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ password, email }),
-    }).then((response) => this._handleResponse(response));
-  }
 }
 
 export const mainApi = new MainApi({
-  url: 'http://api.movies-Hohlov.nomoredomains.club',
+  url: 'https://api.movies-Hohlov.nomoredomains.club',
 });
+
+/*
+/* регистрация
+register(name, email, password) {
+  return fetch(`${this._url}/signup`, {
+    method: 'POST',
+    //credentials: 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ name, email, password }),
+  }).then((response) => this._handleResponse(response));
+}
+
+/* авторизация
+authorize(email, password) {
+  return fetch(`${this._url}/signin`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ password, email }),
+  }).then((response) => this._handleResponse(response));
+}
+
+/* получение контента после авторизации
+getMovies(jwt) {
+  return fetch(`${this._url}/users/me`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${jwt}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => data);
+}
+
+
+*/

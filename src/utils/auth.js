@@ -2,7 +2,6 @@ const BASE_URL = 'https://api.movies-Hohlov.nomoredomains.club';
 
 const response = (res) => (res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
 
-/* регистрация */
 export const register = (name, email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
@@ -14,7 +13,6 @@ export const register = (name, email, password) => {
   }).then(response);
 };
 
-/* авторизация */
 export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
@@ -26,7 +24,7 @@ export const authorize = (email, password) => {
   }).then(response);
 };
 
-export const getContent = (token) => {
+export const getMovies = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
