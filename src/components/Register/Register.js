@@ -3,7 +3,27 @@ import { Link } from 'react-router-dom';
 import './Register.css';
 import logo from '../../images/logo__header.svg';
 
-function Register() {
+function Register({ handleRegister }) {
+  const [data, setData] = React.useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setData({
+      ...data,
+      [name]: value,
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const { name, email, password } = data;
+    handleRegister(name, email, password);
+  }
+
   return (
     <main className="register">
       <header className="register__header">
@@ -14,17 +34,47 @@ function Register() {
         <h1 className="register__header-title">Добро пожаловать!</h1>
       </header>
       <fieldset className="register__fieldset">
-        <form className="register__form">
+        <form className="register__form" onSubmit={handleSubmit}>
           <h3 className="register__form-title">Имя</h3>
-          <input className="register__form-input" type="text" minLength="3" maxLength="35" required></input>
+          <input
+            className="register__form-input"
+            type="text"
+            minLength="3"
+            maxLength="35"
+            required
+            onChange={handleChange}
+            value={data.name}
+            id="name"
+            name="name"
+          ></input>
           <span className="register__input-error"></span>
 
           <h3 className="register__form-title">E-mail</h3>
-          <input className="register__form-input" type="e-mail" minLength="3" maxLength="35" required></input>
+          <input
+            className="register__form-input"
+            type="e-mail"
+            minLength="3"
+            maxLength="35"
+            id="email"
+            name="email"
+            required
+            onChange={handleChange}
+            value={data.email}
+          ></input>
           <span className="register__input-error"></span>
 
           <h3 className="register__form-title">Пароль</h3>
-          <input className="register__form-input" type="password" minLength="3" maxLength="35" required></input>
+          <input
+            className="register__form-input"
+            type="password"
+            minLength="3"
+            maxLength="35"
+            id="password"
+            name="password"
+            required
+            onChange={handleChange}
+            value={data.password}
+          ></input>
           <span className="register__input-error"></span>
 
           <button className="register__button" type="submit">

@@ -5,7 +5,7 @@
 .movies-card-list__elements {
   display: grid;
   gap: 30px 20px;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(270px, .7fr));
   grid-template-rows: auto;
   justify-content: center;
   max-width: 1140px;
