@@ -23,14 +23,3 @@ export const authorize = (email, password) => {
     body: JSON.stringify({ email, password }),
   }).then(response);
 };
-
-export const getMovies = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  }).then(response);
-};

@@ -11,21 +11,25 @@ class MainApi {
 
   /* получение информации о пользователе с сервера */
   getUserInfo() {
-    //console.log(localStorage.getItem('token'));
-    //console.log(localStorage.getItem('jwt'));
-    return fetch(`${this._url}/users/me`, {
+    //console.log(localStorage.jwt);
+    //console.log(localStorage.token);
+    //console.log(localStorage.token === localStorage.jwt);
+    return fetch(`${this._url}/users/users/me`, {
       method: 'GET',
       headers: {
-        authorization: `Bearer ${localStorage.getItem('token')}`,
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
         'Content-Type': 'application/json',
       },
-    }).then((res) => this._checkResponse(res));
+    }).then((res) => {
+      //console.log(res);
+      return this._checkResponse(res);
+    });
   }
 
   /* редактирование профиля */
   patchUserInfo(data) {
-    console.log(data);
-    return fetch(`${this._url}/users/me`, {
+    //console.log(data);
+    return fetch(`${this._url}/users/users/me`, {
       method: 'PATCH',
       headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
@@ -46,7 +50,10 @@ class MainApi {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
         'Content-Type': 'application/json',
       },
-    }).then((res) => this._checkResponse(res));
+    }).then((res) => {
+      //console.log(res);
+      return this._checkResponse(res);
+    });
   }
 
   /* добавление фильма */
@@ -83,6 +90,30 @@ class MainApi {
         'Content-Type': 'application/json',
       },
     }).then((res) => this._checkResponse(res));
+  }
+
+  /* регистрация на серевер */
+  register(name, email, password) {
+    return fetch(`${this._url}/signup`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email, password }),
+    }).then((response) => this._checkResponse(response));
+  }
+
+  /* авторизация на сервере*/
+  authorize(email, password) {
+    return fetch(`${this._url}/signin`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password, email }),
+    }).then((response) => this._checkResponse(response));
   }
 }
 

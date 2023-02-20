@@ -1,51 +1,57 @@
-import React, { useState, useEffect, useLocation } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import { movieApi } from '../../../utils/MovieApi';
-import { mainApi } from '../../../utils/MainApi';
-import { CurrentUserContext } from '../../../contexts/CurrentUserContext';
-import { DECK_SIZE, TABLET_SIZE, MOBILE_SIZE } from '../../../utils/constants';
 
 function MoviesCardList({ movie, onCardLike, onCardDelete }) {
-  const moviesCount = DECK_SIZE || TABLET_SIZE || MOBILE_SIZE;
-  const [countMovies, setCountMovies] = useState(moviesCount);
-  const [freeCell, setFreeCell] = useState(0);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [countMovies, setCountMovies] = useState(0);
+  const location = useLocation();
 
-  function resizeWindow() {
-    const moviesCountResize = DECK_SIZE || TABLET_SIZE || MOBILE_SIZE;
-    setCountMovies(moviesCountResize);
-  }
+  //добавляю слушатель ресайза экрана
+  useEffect(() => {
+    const resizeWindow = () => {
+      setTimeout(() => setScreenWidth(window.innerWidth), 500);
+    };
+    window.addEventListener('resize', resizeWindow);
+    return () => {
+      window.removeEventListener('resize', resizeWindow);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (screenWidth >= 990) {
+      setCountMovies(12);
+    } else {
+      setCountMovies(6);
+    }
+  }, [screenWidth]);
 
   //функция работы кнопки "ещё"
   function handleButtonMore() {
     console.log(countMovies);
-    if (window.innerWidth >= 1181) {
-      setCountMovies(countMovies + 3);
+    if (screenWidth >= 990) {
+      setCountMovies(countMovies + 12);
     } else {
-      setCountMovies(countMovies + 2);
+      setCountMovies(countMovies + 6);
     }
   }
-
-  //добавляю слушатель ресайза экрана
-  useEffect(() => {
-    window.addEventListener('resize', resizeWindow);
-  }, []);
-
-  //проверяю количество свободных ячеек
-  useEffect(() => {
-    setFreeCell(movie.length - countMovies);
-  }, [movie]);
 
   return (
     <section className="movies-card-list">
       <div className="movies-card-list__elements">
-        {movie.map((movie) => (
-          <MoviesCard key={movie.id} movie={movie} onCardDelete={onCardDelete} onCardLike={onCardLike} />
+        {movie.slice(0, countMovies).map((movie) => (
+          <MoviesCard
+            key={location.pathname === '/movies' ? movie.id : movie.movieId}
+            movie={movie}
+            onCardDelete={onCardDelete}
+            onCardLike={onCardLike}
+          />
         ))}
       </div>
       {movie.length > 0 ? (
         <button
-          className={movie.length > moviesCount ? 'movies-card-list__more-btn' : 'movies-card-list__more-btn_hidden'}
+          className={movie.length > countMovies ? 'movies-card-list__more-btn' : 'movies-card-list__more-btn_hidden'}
           type="button"
           onClick={handleButtonMore}
         >
@@ -59,45 +65,3 @@ function MoviesCardList({ movie, onCardLike, onCardDelete }) {
 }
 
 export default MoviesCardList;
-
-/*
-function MoviesCardList({ movie, onCardLike, onCardDelete, savedMovies }) {
-  const currentUser = React.useContext(CurrentUserContext);
-  const [movie, setMovie] = React.useState([]);
-
-  const [savedMovies, setSavedMovies] = useState([]);
-
-  useEffect(() => {
-    console.log(111111);
-    Promise.all([movieApi.getMovies()])
-      .then(([movie]) => {
-        setMovie(movie);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  //сохраняю фильм и обновляю список сохраненных
-  function handleSaveMovie(movie) {
-    console.log('handleSaveMovie');
-  }
-
-  //удаляю и сразу обновляю массив сохраненных фильмов
-  function handleDeleteMovie(movie) {
-    console.log('handleDeleteMovie');
-  }
-
-  return (
-    <section className="movies-card-list">
-      <div className="movies-card-list__elements">
-        {movie.map((movie) => (
-          <MoviesCard key={movie.id} movie={movie} onCardLike={handleSaveMovie} onCardDelete={handleDeleteMovie} savedMovies={savedMovies} />
-        ))}
-      </div>
-      <button className="movies-card-list__more-btn" type="button">
-        Еще
-      </button>
-    </section>
-  );
-}
-
-*/

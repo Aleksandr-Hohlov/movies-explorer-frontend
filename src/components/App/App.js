@@ -17,21 +17,26 @@ import { movieApi } from '../../utils/MovieApi';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
-  const [isDataSet, setIsDataSet] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
   const history = useHistory();
+  //const navigate = React.useNavigate();
 
-  /*получаю информацию о профиле с сервера  d6221@yandex.ru*/
+  /*получаю информацию о профиле с сервера  d6221@yandex.ru d622q1@yandex.ru d1@yandex.ru*/
   useEffect(() => {
+    //console.log(localStorage);
     if (localStorage.getItem('jwt')) {
       mainApi
         .getUserInfo()
         .then((userInfoObject) => {
-          setCurrentUser(userInfoObject);
           setLoggedIn(true);
-          localStorage.setItem('user', userInfoObject.email);
-          // navigate('/movies')
+          setCurrentUser(userInfoObject.data);
+          localStorage.setItem('user', userInfoObject.data.email);
+          //console.log(currentUser);
+          //console.log(localStorage);
+          // console.log(userInfoObject.data);
+          //setLoggedIn(false);
+          //console.log(loggedIn);
         })
         .catch((err) => {
           console.log(`Невозможно получить информацию о пользователе ${err}`);
@@ -41,23 +46,25 @@ function App() {
 
   /* регистрация */
   function handleRegister(name, email, password) {
-    return auth
+    localStorage.clear();
+    return mainApi
       .register(name, email, password)
       .then(() => {
         handleLogin(email, password);
         console.log(email);
         console.log(password);
-        debugger;
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
+  console.log(currentUser);
+
   /*функция  логина d6221@yandex.ru*/
   function handleLogin(email, password) {
     //console.log(localStorage);
-    return auth
+    return mainApi
       .authorize(email, password)
       .then((data) => {
         if (data.token) {
@@ -66,8 +73,9 @@ function App() {
           localStorage.setItem('login', true);
           console.log(localStorage);
           console.log(data);
+          history.push('/movies');
           window.location.reload();
-          debugger;
+          //debugger;
         }
       })
       .catch((err) => {
