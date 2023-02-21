@@ -14,7 +14,7 @@ class MainApi {
     //console.log(localStorage.jwt);
     //console.log(localStorage.token);
     //console.log(localStorage.token === localStorage.jwt);
-    return fetch(`${this._url}/users/users/me`, {
+    return fetch(`${this._url}/users/me`, {
       method: 'GET',
       headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
@@ -29,7 +29,7 @@ class MainApi {
   /* редактирование профиля */
   patchUserInfo(data) {
     //console.log(data);
-    return fetch(`${this._url}/users/users/me`, {
+    return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,

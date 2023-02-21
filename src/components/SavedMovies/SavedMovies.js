@@ -13,7 +13,7 @@ function SavedMovies({ loggedIn }) {
   const currentUser = useContext(CurrentUserContext);
 
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [isPreloader, setIsPreloader] = useState(true);
+  const [isPreloader, setIsPreloader] = useState(false);
   const [shortMovies, setShortMovies] = useState(JSON.parse(localStorage.getItem('saved-movies-short')));
   const [savedMovies, setSavedMovies] = useState([]);
 
@@ -75,6 +75,14 @@ function SavedMovies({ loggedIn }) {
     console.log(savedMovieId);
     mainApi.deleteMovie(savedMovieId._id).then(() => {
       console.log('удалено');
+      const newSavedMovies = savedMovies.filter((m) => {
+        if (movie.id === m.movieId || movie.movieId === m.movieId) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+      setSavedMovies(newSavedMovies);
     });
   }
 

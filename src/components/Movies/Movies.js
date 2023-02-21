@@ -12,10 +12,10 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 function Movies({ loggedIn }) {
   const [filteredMovies, setFilteredMovies] = useState(['']);
   const [allMovies, setAllMovies] = useState([]);
-  const [isPreloader, setIsPreloader] = useState(true);
+  const [isPreloader, setIsPreloader] = useState(false);
   const [shortMovies, setShortMovies] = useState(JSON.parse(localStorage.getItem('movies-short')));
   const [savedMovies, setSavedMovies] = useState([]);
-
+  const [savedMovies2, setSavedMovies2] = useState([]);
   const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
@@ -23,8 +23,9 @@ function Movies({ loggedIn }) {
       mainApi
         .getSavedMovies()
         .then((data) => {
-          const userSavedList = data.filter((m) => m.owner === currentUser._id);
-          console.log(userSavedList);
+          const userSavedList2 = data.filter((m) => m.owner === currentUser._id);
+          console.log(userSavedList2);
+          setSavedMovies2(userSavedList2);
         })
         .catch((err) => {
           console.log(`Невозможно отобразить сохранненые фильмы с сервера ${err}`);
@@ -40,7 +41,7 @@ function Movies({ loggedIn }) {
       movieApi
         .getMovies()
         .then((data) => {
-          setIsPreloader(true);
+          //setIsPreloader(true);
           setAllMovies(data);
         })
         .catch((err) => {
@@ -99,10 +100,21 @@ function Movies({ loggedIn }) {
       .then((data) => {
         console.log(data);
         setSavedMovies([data, ...savedMovies]);
+        /// проверить !!! localStorage.setItem('search-saved-movies', movie); !!!!!!!!!!!!!!!!!!!!!!!!!!
+        //localStorage.setItem('search-saved-movies', JSON.stringify(data));
+        //localStorage.setItem('search-saved-movies', JSON.stringify(movie));
       })
       .catch((err) => {
         console.log(`Невозможно загрузить данные на сервер ${err}`);
       });
+  }
+
+  function handleCardDelete(movie) {
+    const savedMovieId = savedMovies.find((item) => item.movieId === movie.id || item.movieId === movie.movieId);
+    console.log(savedMovieId);
+    mainApi.deleteMovie(savedMovieId._id).then(() => {
+      console.log('удалено');
+    });
   }
 
   console.log(localStorage);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch, BrowserRouter, useHistory } from 'react-router-dom';
+import { Route, Switch, BrowserRouter, useHistory, Redirect } from 'react-router-dom';
 
 //import logo from '../../images/logo.svg';
 import './App.css';
@@ -14,6 +14,7 @@ import PageNotFound from '../../utils/PageNotFound/PageNotFound';
 import * as auth from '../../utils/auth';
 import { mainApi } from '../../utils/MainApi';
 import { movieApi } from '../../utils/MovieApi';
+import ProtectedRoute from '../ProtectedRoute';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
@@ -123,3 +124,8 @@ function App() {
 }
 
 export default App;
+
+/*
+            <ProtectedRoute path="/movies" exact loggedIn={loggedIn} component={Movies} />
+            <ProtectedRoute path="/saved-movies" exact loggedIn={loggedIn} component={SavedMovies} />
+*/
