@@ -80,6 +80,10 @@
   opacity: .8;
 }
 
+.login__button:disabled {
+  background: #A0A0A0;
+}
+
 .login__login-container {
   text-align: center;
 }

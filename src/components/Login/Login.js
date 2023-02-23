@@ -1,27 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import './Login.css';
 import logo from '../../images/logo__header.svg';
 
 function Login({ handleLogin }) {
-  const [data, setData] = React.useState({
-    email: '',
-    password: '',
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    reset,
+  } = useForm({ mode: 'onChange' });
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setData({
-      ...data,
-      [name]: value,
-    });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    const { email, password } = data;
-    handleLogin(email, password);
-    console.log(data);
+  function onSubmit(data) {
+    handleLogin(data.email, data.password);
+    reset();
   }
   return (
     <main className="login">
@@ -32,35 +25,43 @@ function Login({ handleLogin }) {
         <h1 className="login__header-title">Рады видеть!</h1>
       </header>
       <fieldset className="login__fieldset">
-        <form className="login__form" onSubmit={handleSubmit}>
+        <form className="login__form" noValidate onSubmit={handleSubmit(onSubmit)}>
           <h3 className="login__form-title">E-mail</h3>
           <input
-            className="login__form-input"
-            type="e-mail"
-            id="email"
-            name="email"
+            className="register__form-input"
+            type="email"
             minLength="3"
             maxLength="35"
-            required
-            onChange={handleChange}
-            value={data.email}
-          />
-          <span className="login__input-error"></span>
+            name="email"
+            {...register('email', {
+              required: 'Поле обязательно для заполнения',
+
+              pattern: {
+                value: /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
+                message: 'Введите корректно email, например "example@ex.com"',
+              },
+              // onChange: (e) => setErrEmail(e.target.validationMessage),
+            })}
+          ></input>
+          <span className="login__input-error">{errors.email && errors.email.message}</span>
 
           <h3 className="login__form-title">Пароль</h3>
           <input
-            className="login__form-input"
+            className="register__form-input"
             type="password"
             name="password"
-            minLength="3"
-            maxLength="35"
-            required
-            onChange={handleChange}
-            value={data.password}
-          />
-          <span className="login__input-error"></span>
+            {...register('password', {
+              required: 'Поле обязательно для заполнения',
 
-          <button className="login__button" type="submit">
+              pattern: {
+                value: /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
+                message: 'Пароль должен сожержать cтрочные и прописные латинские буквы, цифры, спецсимволы. Минимум 8 символов',
+              },
+            })}
+          ></input>
+          <span className="login__input-error">{errors.password && errors.password.message}</span>
+
+          <button className="login__button" type="submit" disabled={!isValid}>
             Войти
           </button>
           <div className="login__login-container">

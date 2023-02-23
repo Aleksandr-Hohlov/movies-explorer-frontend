@@ -5,7 +5,7 @@ import './Profile.css';
 import Header from '../Movies/Header/Header';
 import { mainApi } from '../../utils/MainApi';
 
-function Profile() {
+function Profile({ onLogOut }) {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
@@ -17,12 +17,10 @@ function Profile() {
     setEmail(currentUser.email);
   }, [currentUser]);
 
-  /*Функции изменения инпутов Name*/
   function handleChangeName(e) {
     setName(e.target.value);
   }
 
-  /*Функции изменения инпутов Email*/
   function handleChangeEmail(e) {
     setEmail(e.target.value);
   }
@@ -30,12 +28,6 @@ function Profile() {
   /*функция саббмита формы*/
   function handleSubmit(e) {
     e.preventDefault();
-    /*
-    console.log({
-      name: name,
-      email: email,
-    });
-*/
     mainApi
       .patchUserInfo({
         name: name,
@@ -48,6 +40,7 @@ function Profile() {
 
   function handleLogout() {
     localStorage.clear();
+    onLogOut();
     //history.push('/');
     // window.location.reload();
   }

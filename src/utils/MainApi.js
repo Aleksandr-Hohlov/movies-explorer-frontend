@@ -11,9 +11,6 @@ class MainApi {
 
   /* получение информации о пользователе с сервера */
   getUserInfo() {
-    //console.log(localStorage.jwt);
-    //console.log(localStorage.token);
-    //console.log(localStorage.token === localStorage.jwt);
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
       headers: {
@@ -51,7 +48,6 @@ class MainApi {
         'Content-Type': 'application/json',
       },
     }).then((res) => {
-      //console.log(res);
       return this._checkResponse(res);
     });
   }
@@ -120,46 +116,3 @@ class MainApi {
 export const mainApi = new MainApi({
   url: 'https://api.movies-Hohlov.nomoredomains.club',
 });
-
-/*
-/* регистрация
-register(name, email, password) {
-  return fetch(`${this._url}/signup`, {
-    method: 'POST',
-    //credentials: 'include',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ name, email, password }),
-  }).then((response) => this._handleResponse(response));
-}
-
-/* авторизация
-authorize(email, password) {
-  return fetch(`${this._url}/signin`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ password, email }),
-  }).then((response) => this._handleResponse(response));
-}
-
-/* получение контента после авторизации
-getMovies(jwt) {
-  return fetch(`${this._url}/users/me`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${jwt}`,
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => data);
-}
-
-
-*/

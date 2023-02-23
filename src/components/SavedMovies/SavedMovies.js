@@ -5,7 +5,6 @@ import Footer from '../Main/Footer/Footer';
 import SearchForm from '../Movies/SearchForm/SearchForm';
 import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
 import Preloader from '../../utils/Preloader/Preloader';
-import { movieApi } from '../../utils/MovieApi';
 import { mainApi } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
@@ -13,7 +12,7 @@ function SavedMovies({ loggedIn }) {
   const currentUser = useContext(CurrentUserContext);
 
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [isPreloader, setIsPreloader] = useState(false);
+  const [isPreloader, setIsPreloader] = useState(true);
   const [shortMovies, setShortMovies] = useState(JSON.parse(localStorage.getItem('saved-movies-short')));
   const [savedMovies, setSavedMovies] = useState([]);
 
@@ -21,7 +20,6 @@ function SavedMovies({ loggedIn }) {
     if (loggedIn) {
       if (localStorage.getItem('search-saved-movies')) {
         setFilteredMovies(JSON.parse(localStorage.getItem('search-saved-movies')));
-        console.log(11111);
       }
       mainApi
         .getSavedMovies()
@@ -29,12 +27,9 @@ function SavedMovies({ loggedIn }) {
           const userSavedList = data.filter((m) => m.owner === currentUser._id);
           setSavedMovies(userSavedList);
           setIsPreloader(true);
-          console.log(2222);
-          console.log(userSavedList);
-          console.log(localStorage.getItem('search-saved-movies'));
         })
         .catch((err) => {
-          console.log(`Невозможно отобразить сохранненые фильмы с сервера ${err}`);
+          console.log(err);
         })
         .finally(() => setIsPreloader(false));
     }
@@ -71,10 +66,8 @@ function SavedMovies({ loggedIn }) {
   }
 
   function handleCardDelete(movie) {
-    const savedMovieId = savedMovies.find((item) => item.movieId === movie.id || item.movieId === movie.movieId);
-    console.log(savedMovieId);
+    const savedMovieId = savedMovies.find((m) => m.movieId === movie.id || m.movieId === movie.movieId);
     mainApi.deleteMovie(savedMovieId._id).then(() => {
-      console.log('удалено');
       const newSavedMovies = savedMovies.filter((m) => {
         if (movie.id === m.movieId || movie.movieId === m.movieId) {
           return false;
@@ -82,6 +75,7 @@ function SavedMovies({ loggedIn }) {
           return true;
         }
       });
+
       setSavedMovies(newSavedMovies);
     });
   }

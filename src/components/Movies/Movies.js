@@ -12,10 +12,9 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 function Movies({ loggedIn }) {
   const [filteredMovies, setFilteredMovies] = useState(['']);
   const [allMovies, setAllMovies] = useState([]);
-  const [isPreloader, setIsPreloader] = useState(false);
+  const [isPreloader, setIsPreloader] = useState(true);
   const [shortMovies, setShortMovies] = useState(JSON.parse(localStorage.getItem('movies-short')));
   const [savedMovies, setSavedMovies] = useState([]);
-  const [savedMovies2, setSavedMovies2] = useState([]);
   const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
@@ -23,12 +22,10 @@ function Movies({ loggedIn }) {
       mainApi
         .getSavedMovies()
         .then((data) => {
-          const userSavedList2 = data.filter((m) => m.owner === currentUser._id);
-          console.log(userSavedList2);
-          setSavedMovies2(userSavedList2);
+          setSavedMovies(data.filter((m) => m.owner === currentUser._id));
         })
         .catch((err) => {
-          console.log(`Невозможно отобразить сохранненые фильмы с сервера ${err}`);
+          console.log(err);
         });
     }
   }, [loggedIn, currentUser]);
@@ -41,11 +38,11 @@ function Movies({ loggedIn }) {
       movieApi
         .getMovies()
         .then((data) => {
-          //setIsPreloader(true);
+          setIsPreloader(true);
           setAllMovies(data);
         })
         .catch((err) => {
-          console.log(`Невозможно отобразить фильмы с сервера ${err}`);
+          console.log(err);
         })
         .finally(() => setIsPreloader(false));
     } else {
@@ -53,10 +50,9 @@ function Movies({ loggedIn }) {
         .getMovies()
         .then((data) => {
           setAllMovies(data);
-          //console.log(data);
         })
         .catch((err) => {
-          console.log(`Невозможно отобразить фильмы с сервера ${err}`);
+          console.log(err);
         });
     }
   }, [loggedIn, currentUser]);
@@ -65,7 +61,7 @@ function Movies({ loggedIn }) {
     const tempMovies = searchMovies(allMovies, searchValue);
     localStorage.setItem('search-movies', JSON.stringify(tempMovies));
     localStorage.setItem('search-value', searchValue);
-    //console.log(1111111111);
+
     return setFilteredMovies(tempMovies);
   }
 
@@ -86,11 +82,9 @@ function Movies({ loggedIn }) {
   }
 
   function handleShortFilms() {
-    //console.log(1111111111);
     setShortMovies(!shortMovies);
     localStorage.setItem('movies-short', !shortMovies);
     filterMovie(localStorage.getItem('search-value'));
-    //console.log(localStorage);
   }
 
   function handleSaveMovie(movie) {
@@ -100,24 +94,25 @@ function Movies({ loggedIn }) {
       .then((data) => {
         console.log(data);
         setSavedMovies([data, ...savedMovies]);
-        /// проверить !!! localStorage.setItem('search-saved-movies', movie); !!!!!!!!!!!!!!!!!!!!!!!!!!
-        //localStorage.setItem('search-saved-movies', JSON.stringify(data));
-        //localStorage.setItem('search-saved-movies', JSON.stringify(movie));
       })
       .catch((err) => {
-        console.log(`Невозможно загрузить данные на сервер ${err}`);
+        console.log(err);
       });
   }
 
   function handleCardDelete(movie) {
-    const savedMovieId = savedMovies.find((item) => item.movieId === movie.id || item.movieId === movie.movieId);
-    console.log(savedMovieId);
+    const savedMovieId = savedMovies.find((m) => m.movieId === movie.id || m.movieId === movie.movieId);
     mainApi.deleteMovie(savedMovieId._id).then(() => {
-      console.log('удалено');
+      const newSavedMovies = savedMovies.filter((m) => {
+        if (movie.id === m.movieId || movie.movieId === m.movieId) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+      setSavedMovies(newSavedMovies);
     });
   }
-
-  console.log(localStorage);
 
   return (
     <div className="movies">
@@ -125,7 +120,12 @@ function Movies({ loggedIn }) {
       <main className="movies__content">
         <SearchForm filter={filterMovie} handleShortFilms={handleShortFilms} shortMovies={shortMovies} />
         {isPreloader ? <Preloader /> : ''}
-        <MoviesCardList movie={localStorage.getItem('search-movies') ? filteredMovies : allMovies} onCardLike={handleSaveMovie} />
+        <MoviesCardList
+          movie={localStorage.getItem('search-movies') ? filteredMovies : allMovies}
+          onCardLike={handleSaveMovie}
+          onCardDelete={handleCardDelete}
+          savedMovies={savedMovies}
+        />
       </main>
       <Footer />
     </div>

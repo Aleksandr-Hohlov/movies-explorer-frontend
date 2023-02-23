@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch, BrowserRouter, useHistory, Redirect } from 'react-router-dom';
+import { Route, Switch, BrowserRouter, useHistory } from 'react-router-dom';
 
-//import logo from '../../images/logo.svg';
 import './App.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
@@ -11,77 +10,105 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import PageNotFound from '../../utils/PageNotFound/PageNotFound';
-import * as auth from '../../utils/auth';
 import { mainApi } from '../../utils/MainApi';
-import { movieApi } from '../../utils/MovieApi';
 import ProtectedRoute from '../ProtectedRoute';
+import Preloader from '../../utils/Preloader/Preloader';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [tokenChecked, setTokenChecked] = useState(false);
 
   const history = useHistory();
-  //const navigate = React.useNavigate();
 
-  /*получаю информацию о профиле с сервера  d6221@yandex.ru d622q1@yandex.ru d1@yandex.ru*/
+  // useEffect(() => {
+  //   tokenCheck();
+  // }, []);
+
+  // function tokenCheck() {
+  //   mainApi
+  //     .getUserInfo()
+  //     .then((userInfoData) => {
+  //       setLoggedIn(true);
+  //       setCurrentUser(userInfoData.data);
+  //       localStorage.setItem('user', userInfoData.data.email);
+  //       setTokenChecked(true);
+  //       console.log(`tokenChecked = ${tokenChecked}`);
+  //       console.log(`loggedIn = ${loggedIn}`);
+  //     })
+  //     .catch((err) => {
+  //       //setLoggedIn(false);
+  //       //setCurrentUser({});
+  //       console.log(err);
+  //     });
+  // }
+
+  /*получаю информацию о профиле с сервера*/
   useEffect(() => {
-    //console.log(localStorage);
+    console.log(localStorage);
     if (localStorage.getItem('jwt')) {
       mainApi
         .getUserInfo()
-        .then((userInfoObject) => {
+        .then((userInfoData) => {
           setLoggedIn(true);
-          setCurrentUser(userInfoObject.data);
-          localStorage.setItem('user', userInfoObject.data.email);
-          //console.log(currentUser);
-          //console.log(localStorage);
-          // console.log(userInfoObject.data);
-          //setLoggedIn(false);
-          //console.log(loggedIn);
+          setCurrentUser(userInfoData.data);
+          localStorage.setItem('user', userInfoData.data.email);
+          // console.log(`tokenChecked = ${tokenChecked}`);
+          // console.log(`loggedIn = ${loggedIn}`);
         })
         .catch((err) => {
-          console.log(`Невозможно получить информацию о пользователе ${err}`);
+          console.log(err);
+        })
+        .finally(() => {
+          console.log(`tokenChecked = ${tokenChecked}`);
+          setTokenChecked(true);
         });
+    } else {
+      setTokenChecked(true);
+      console.log(`tokenChecked = ${tokenChecked}`);
     }
   }, [localStorage.getItem('jwt')]);
 
-  /* регистрация */
   function handleRegister(name, email, password) {
-    localStorage.clear();
     return mainApi
       .register(name, email, password)
       .then(() => {
+        localStorage.clear();
         handleLogin(email, password);
-        console.log(email);
-        console.log(password);
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  console.log(currentUser);
-
-  /*функция  логина d6221@yandex.ru*/
   function handleLogin(email, password) {
-    //console.log(localStorage);
     return mainApi
       .authorize(email, password)
       .then((data) => {
+        console.log(data);
         if (data.token) {
           localStorage.setItem('jwt', data.token);
           setLoggedIn(true);
           localStorage.setItem('login', true);
-          console.log(localStorage);
-          console.log(data);
           history.push('/movies');
+          console.log(loggedIn);
           window.location.reload();
-          //debugger;
         }
       })
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  // console.log(`Перед return tokenChecked = ${tokenChecked}`);
+  // console.log(`Перед return loggedIn = ${loggedIn}`);
+
+  if (!tokenChecked) {
+    return (
+      <>
+        <Preloader />;
+      </>
+    );
   }
 
   return (
@@ -93,17 +120,9 @@ function App() {
               <Main />
             </Route>
 
-            <Route path="/movies">
-              <Movies loggedIn={loggedIn} />
-            </Route>
-
-            <Route path="/saved-movies">
-              <SavedMovies loggedIn={loggedIn} />
-            </Route>
-
-            <Route path="/profile">
-              <Profile />
-            </Route>
+            <ProtectedRoute path="/movies" exact loggedIn={loggedIn} component={Movies} />
+            <ProtectedRoute path="/saved-movies" exact loggedIn={loggedIn} component={SavedMovies} />
+            <ProtectedRoute path="/profile" exact loggedIn={loggedIn} component={Profile} onLogOut={() => setLoggedIn(false)} />
 
             <Route path="/signin">
               <Login handleLogin={handleLogin} />
@@ -124,8 +143,3 @@ function App() {
 }
 
 export default App;
-
-/*
-            <ProtectedRoute path="/movies" exact loggedIn={loggedIn} component={Movies} />
-            <ProtectedRoute path="/saved-movies" exact loggedIn={loggedIn} component={SavedMovies} />
-*/
