@@ -11,7 +11,7 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import PageNotFound from '../../utils/PageNotFound/PageNotFound';
 import { mainApi } from '../../utils/MainApi';
-import ProtectedRoute from '../ProtectedRoute';
+import ProtectedRoute from '../../utils/ProtectedRoute';
 import Preloader from '../../utils/Preloader/Preloader';
 
 function App() {
@@ -21,31 +21,8 @@ function App() {
 
   const history = useHistory();
 
-  // useEffect(() => {
-  //   tokenCheck();
-  // }, []);
-
-  // function tokenCheck() {
-  //   mainApi
-  //     .getUserInfo()
-  //     .then((userInfoData) => {
-  //       setLoggedIn(true);
-  //       setCurrentUser(userInfoData.data);
-  //       localStorage.setItem('user', userInfoData.data.email);
-  //       setTokenChecked(true);
-  //       console.log(`tokenChecked = ${tokenChecked}`);
-  //       console.log(`loggedIn = ${loggedIn}`);
-  //     })
-  //     .catch((err) => {
-  //       //setLoggedIn(false);
-  //       //setCurrentUser({});
-  //       console.log(err);
-  //     });
-  // }
-
   /*получаю информацию о профиле с сервера*/
   useEffect(() => {
-    console.log(localStorage);
     if (localStorage.getItem('jwt')) {
       mainApi
         .getUserInfo()
@@ -53,19 +30,15 @@ function App() {
           setLoggedIn(true);
           setCurrentUser(userInfoData.data);
           localStorage.setItem('user', userInfoData.data.email);
-          // console.log(`tokenChecked = ${tokenChecked}`);
-          // console.log(`loggedIn = ${loggedIn}`);
         })
         .catch((err) => {
           console.log(err);
         })
         .finally(() => {
-          console.log(`tokenChecked = ${tokenChecked}`);
           setTokenChecked(true);
         });
     } else {
       setTokenChecked(true);
-      console.log(`tokenChecked = ${tokenChecked}`);
     }
   }, [localStorage.getItem('jwt')]);
 
