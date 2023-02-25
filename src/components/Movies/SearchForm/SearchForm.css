@@ -77,6 +77,10 @@
   transition: .3s;
 }
 
+.search-form__submit-btn_disabled {
+  background: #A0A0A0;
+}
+
 .search-form__submit-btn:hover {
   opacity: .8;
 }

@@ -1,0 +1,47 @@
+.statusMessage{
+  position: relative;
+  width: 100%;
+
+}
+
+.statusMessage__container {
+  align-items: center;
+  /* background-color: rgba(0,0,0,.5); */
+  display: flex;
+  justify-content: center;
+  /* right: 0;
+  bottom: 0;
+  left: 0;
+  top: 1%;*/
+
+  position: absolute;
+  visibility: hidden;
+  z-index: 1;
+  width: 0;
+  /* transition: 0.3s width; */
+  border-radius: 20px;
+  height: 38px;
+  overflow: hidden;
+}
+
+.statusMessage__text{
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.statusMessage__container_opened {
+  visibility: visible;
+  width: 100%;
+}
+
+.statusMessage__container_success {
+  background-color: green;
+}
+
+.statusMessage__container_err {
+  background-color: grey;
+
+}
+
+
