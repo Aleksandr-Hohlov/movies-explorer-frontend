@@ -77,11 +77,20 @@ function App() {
   function handleLogOut() {
     setLoggedIn(false);
     setCurrentUser({});
-    console.log(currentUser);
   }
 
-  // console.log(`Перед return tokenChecked = ${tokenChecked}`);
-  // console.log(`Перед return loggedIn = ${loggedIn}`);
+  /*функция саббмита формы*/
+  function handleProfileEdit(data) {
+    mainApi
+      .patchUserInfo({
+        name: data.name,
+        email: data.email,
+      })
+      .catch((err) => {
+        console.log(`Невозможно загрузить данные на сервер ${err}`);
+      });
+    setCurrentUser({ name: data.name, email: data.email, _id: currentUser._id });
+  }
 
   if (!tokenChecked) {
     return (
@@ -102,18 +111,10 @@ function App() {
 
             <ProtectedRoute path="/movies" exact loggedIn={loggedIn} component={Movies} />
             <ProtectedRoute path="/saved-movies" exact loggedIn={loggedIn} component={SavedMovies} />
-            <ProtectedRoute path="/profile" exact loggedIn={loggedIn} component={Profile} onLogOut={handleLogOut} />
+            <ProtectedRoute path="/profile" exact loggedIn={loggedIn} component={Profile} onLogOut={handleLogOut} onProfileEdit={handleProfileEdit} />
 
             <ProtectedRoute path="/signin" exact loggedIn={!loggedIn} component={Login} handleLogin={handleLogin} />
             <ProtectedRoute path="/signup" exact loggedIn={!loggedIn} component={Register} handleRegister={handleRegister} />
-
-            {/* <Route path="/signin">
-              <Login handleLogin={handleLogin} />
-            </Route>
-
-            <Route path="/signup">
-              <Register handleRegister={handleRegister} />
-            </Route> */}
 
             <Route path="*">
               <PageNotFound />
