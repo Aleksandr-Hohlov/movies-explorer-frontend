@@ -33,6 +33,7 @@ function App() {
         })
         .catch((err) => {
           console.log(err);
+          setCurrentUser({});
         })
         .finally(() => {
           setTokenChecked(true);
@@ -73,6 +74,12 @@ function App() {
       });
   }
 
+  function handleLogOut() {
+    setLoggedIn(false);
+    setCurrentUser({});
+    console.log(currentUser);
+  }
+
   // console.log(`Перед return tokenChecked = ${tokenChecked}`);
   // console.log(`Перед return loggedIn = ${loggedIn}`);
 
@@ -95,15 +102,18 @@ function App() {
 
             <ProtectedRoute path="/movies" exact loggedIn={loggedIn} component={Movies} />
             <ProtectedRoute path="/saved-movies" exact loggedIn={loggedIn} component={SavedMovies} />
-            <ProtectedRoute path="/profile" exact loggedIn={loggedIn} component={Profile} onLogOut={() => setLoggedIn(false)} />
+            <ProtectedRoute path="/profile" exact loggedIn={loggedIn} component={Profile} onLogOut={handleLogOut} />
 
-            <Route path="/signin">
+            <ProtectedRoute path="/signin" exact loggedIn={!loggedIn} component={Login} handleLogin={handleLogin} />
+            <ProtectedRoute path="/signup" exact loggedIn={!loggedIn} component={Register} handleRegister={handleRegister} />
+
+            {/* <Route path="/signin">
               <Login handleLogin={handleLogin} />
             </Route>
 
             <Route path="/signup">
               <Register handleRegister={handleRegister} />
-            </Route>
+            </Route> */}
 
             <Route path="*">
               <PageNotFound />
@@ -116,3 +126,18 @@ function App() {
 }
 
 export default App;
+
+/*
+
+ <Route path="/signin">
+              <Login handleLogin={handleLogin} />
+            </Route>
+
+            <Route path="/signup">
+              <Register handleRegister={handleRegister} />
+            </Route>
+
+
+                       <ProtectedRoute path="/signin" exact loggedIn={!loggedIn} component={Login} handleLogin={handleLogin}/>
+            <ProtectedRoute path="/signup" exact loggedIn={!loggedIn} component={Register} handleRegister={handleRegister}/>
+*/
