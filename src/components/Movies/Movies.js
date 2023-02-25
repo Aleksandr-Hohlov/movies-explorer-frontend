@@ -66,7 +66,6 @@ function Movies({ loggedIn }) {
   }
 
   function searchMovies(movies, value) {
-    console.log(movies);
     if (localStorage.getItem('movies-short') === 'true') {
       const tempShortMovies = movies.filter((m) => {
         return m.duration < 40;
@@ -92,7 +91,6 @@ function Movies({ loggedIn }) {
     mainApi
       .saveMovie(movie)
       .then((data) => {
-        console.log(data);
         setSavedMovies([data, ...savedMovies]);
       })
       .catch((err) => {

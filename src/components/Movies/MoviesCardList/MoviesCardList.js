@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './MoviesCardList.css';
 import MovieCard from '../MovieCard/MovieCard';
+import { VALUE_SCREENWIDTH, SET_COUNTMOVIES_12, SET_COUNTMOVIES_6 } from '../../../constants/constants';
 
 function MoviesCardList({ movie, onCardLike, onCardDelete, savedMovies = [] }) {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -21,20 +22,19 @@ function MoviesCardList({ movie, onCardLike, onCardDelete, savedMovies = [] }) {
   }, []);
 
   useEffect(() => {
-    if (screenWidth >= 990) {
-      setCountMovies(12);
+    if (screenWidth >= VALUE_SCREENWIDTH) {
+      setCountMovies(SET_COUNTMOVIES_12);
     } else {
-      setCountMovies(6);
+      setCountMovies(SET_COUNTMOVIES_6);
     }
   }, [screenWidth]);
 
   //функция работы кнопки "ещё"
   function handleButtonMore() {
-    console.log(countMovies);
-    if (screenWidth >= 990) {
-      setCountMovies(countMovies + 12);
+    if (screenWidth >= VALUE_SCREENWIDTH) {
+      setCountMovies(countMovies + SET_COUNTMOVIES_12);
     } else {
-      setCountMovies(countMovies + 6);
+      setCountMovies(countMovies + SET_COUNTMOVIES_6);
     }
   }
 

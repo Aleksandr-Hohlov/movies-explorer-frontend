@@ -26,6 +26,7 @@ function SavedMovies({ loggedIn }) {
         .then((data) => {
           const userSavedList = data.filter((m) => m.owner === currentUser._id);
           setSavedMovies(userSavedList);
+          setFilteredMovies(userSavedList);
           setIsPreloader(true);
         })
         .catch((err) => {
@@ -38,7 +39,7 @@ function SavedMovies({ loggedIn }) {
   function filterMovie(searchValue) {
     const tempSavedMovies = searchMovies(savedMovies, searchValue);
     localStorage.setItem('search-saved-movies', JSON.stringify(tempSavedMovies));
-    localStorage.setItem('saved-search-value', searchValue);
+    // localStorage.setItem('saved-search-value', searchValue);
 
     return setFilteredMovies(tempSavedMovies);
   }
@@ -75,8 +76,8 @@ function SavedMovies({ loggedIn }) {
           return true;
         }
       });
-
       setSavedMovies(newSavedMovies);
+      setFilteredMovies(newSavedMovies);
     });
   }
 
@@ -86,7 +87,8 @@ function SavedMovies({ loggedIn }) {
       <main className="saved-movies__content">
         <SearchForm filter={filterMovie} handleShortFilms={handleShortFilms} shortMovies={shortMovies} />
         {isPreloader ? <Preloader /> : ''}
-        <MoviesCardList movie={localStorage.getItem('search-saved-movies') ? filteredMovies : savedMovies} onCardDelete={handleCardDelete} />
+        <MoviesCardList movie={filteredMovies} onCardDelete={handleCardDelete} />
+        {/* <MoviesCardList movie={localStorage.getItem('search-saved-movies') ? filteredMovies : savedMovies} onCardDelete={handleCardDelete} /> */}
       </main>
       <Footer />
     </div>

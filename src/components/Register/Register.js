@@ -9,12 +9,10 @@ function Register({ handleRegister, loggedIn }) {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    reset,
   } = useForm({ mode: 'onChange' });
 
   function onSubmit(data) {
     handleRegister(data.name, data.email, data.password);
-    reset();
   }
 
   if (loggedIn) {
