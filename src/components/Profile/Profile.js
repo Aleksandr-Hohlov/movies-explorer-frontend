@@ -5,7 +5,7 @@ import './Profile.css';
 import Header from '../Movies/Header/Header';
 import { useForm } from 'react-hook-form';
 
-function Profile({ onLogOut, onProfileEdit, isSubmitSuccess }) {
+function Profile({ onLogOut, onProfileEdit, isSubmitSuccess, disabledBtn }) {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
@@ -72,7 +72,11 @@ function Profile({ onLogOut, onProfileEdit, isSubmitSuccess }) {
             <p className="profile__submit-success">{isSubmitSuccess ? 'Данные успешно изменены' : ''}</p>
           </div>
 
-          <button className="profile__button" type="submit" disabled={!isValid || (name === currentUser.name && email === currentUser.email)}>
+          <button
+            className="profile__button"
+            type="submit"
+            disabled={!isValid || (name === currentUser.name && email === currentUser.email) || disabledBtn}
+          >
             Редактировать
           </button>
         </form>

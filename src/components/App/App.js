@@ -19,6 +19,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [tokenChecked, setTokenChecked] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [disabledBtn, setDisabledBtn] = useState(false);
 
   const history = useHistory();
 
@@ -82,16 +83,21 @@ function App() {
 
   /*функция саббмита формы*/
   function handleProfileEdit(data) {
+    setDisabledBtn(true);
     mainApi
       .patchUserInfo({
         name: data.name,
         email: data.email,
       })
-      .then(setSubmitSuccess(true))
+      .then(() => {
+        setSubmitSuccess(true);
+      })
       .catch((err) => {
+        setDisabledBtn(false);
         console.log(`Невозможно загрузить данные на сервер ${err}`);
       })
       .finally(() => {
+        setDisabledBtn(false);
         setTimeout(() => setSubmitSuccess(false), 1000);
       });
 
@@ -125,6 +131,7 @@ function App() {
               onLogOut={handleLogOut}
               onProfileEdit={handleProfileEdit}
               isSubmitSuccess={submitSuccess}
+              disabledBtn={disabledBtn}
             />
 
             <ProtectedRoute path="/signin" exact loggedIn={!loggedIn} component={Login} handleLogin={handleLogin} />
