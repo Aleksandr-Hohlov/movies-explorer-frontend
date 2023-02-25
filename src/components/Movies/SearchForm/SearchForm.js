@@ -41,8 +41,7 @@ function SearchForm({ filter, handleShortFilms, shortMovies }) {
             className="search-form__input"
             type="search"
             placeholder="Фильм"
-            minLength="3"
-            //required
+            required
             onChange={handleSearchValueChange}
             value={location.pathname === '/movies' ? searchValue : saveSearchValue}
           ></input>
