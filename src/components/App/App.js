@@ -18,6 +18,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [tokenChecked, setTokenChecked] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const history = useHistory();
 
@@ -86,9 +87,14 @@ function App() {
         name: data.name,
         email: data.email,
       })
+      .then(setSubmitSuccess(true))
       .catch((err) => {
         console.log(`Невозможно загрузить данные на сервер ${err}`);
+      })
+      .finally(() => {
+        setTimeout(() => setSubmitSuccess(false), 1000);
       });
+
     setCurrentUser({ name: data.name, email: data.email, _id: currentUser._id });
   }
 
@@ -111,7 +117,15 @@ function App() {
 
             <ProtectedRoute path="/movies" exact loggedIn={loggedIn} component={Movies} />
             <ProtectedRoute path="/saved-movies" exact loggedIn={loggedIn} component={SavedMovies} />
-            <ProtectedRoute path="/profile" exact loggedIn={loggedIn} component={Profile} onLogOut={handleLogOut} onProfileEdit={handleProfileEdit} />
+            <ProtectedRoute
+              path="/profile"
+              exact
+              loggedIn={loggedIn}
+              component={Profile}
+              onLogOut={handleLogOut}
+              onProfileEdit={handleProfileEdit}
+              isSubmitSuccess={submitSuccess}
+            />
 
             <ProtectedRoute path="/signin" exact loggedIn={!loggedIn} component={Login} handleLogin={handleLogin} />
             <ProtectedRoute path="/signup" exact loggedIn={!loggedIn} component={Register} handleRegister={handleRegister} />
