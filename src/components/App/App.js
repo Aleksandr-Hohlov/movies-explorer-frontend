@@ -34,7 +34,8 @@ function App() {
           localStorage.setItem('user', userInfoData.data.email);
         })
         .catch((err) => {
-          console.log(err);
+          console.log(`Ошибка при получении данных о профиле (${err})`);
+          alert(`Ошибка при получении данных о профиле (${err})`);
           setCurrentUser({});
         })
         .finally(() => {
@@ -53,7 +54,8 @@ function App() {
         handleLogin(email, password);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(`Ошибка при регистрации (${err})`);
+        alert(`Ошибка при регистрации (${err})`);
       });
   }
 
@@ -72,7 +74,8 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log(`Ошибка при входе (${err})`);
+        alert(`Ошибка при входе (${err})`);
       });
   }
 
@@ -95,6 +98,7 @@ function App() {
       .catch((err) => {
         setDisabledBtn(false);
         console.log(`Невозможно загрузить данные на сервер ${err}`);
+        alert(`Невозможно загрузить данные на сервер (${err}`);
       })
       .finally(() => {
         setDisabledBtn(false);

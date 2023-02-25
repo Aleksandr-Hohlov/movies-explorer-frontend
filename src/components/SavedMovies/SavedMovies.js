@@ -30,7 +30,8 @@ function SavedMovies({ loggedIn }) {
           setIsPreloader(true);
         })
         .catch((err) => {
-          console.log(err);
+          console.log(`Ошибка при получении сохранненых фильмов (${err})`);
+          alert(`Ошибка при получении сохранненых фильмов (${err})`);
         })
         .finally(() => setIsPreloader(false));
     }

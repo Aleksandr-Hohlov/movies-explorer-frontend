@@ -25,7 +25,8 @@ function Movies({ loggedIn }) {
           setSavedMovies(data.filter((m) => m.owner === currentUser._id));
         })
         .catch((err) => {
-          console.log(err);
+          console.log(`Ошибка при получении фильмов (${err})`);
+          alert(`Ошибка при получении фильмов (${err})`);
         });
     }
   }, [loggedIn, currentUser]);
@@ -42,7 +43,8 @@ function Movies({ loggedIn }) {
           setAllMovies(data);
         })
         .catch((err) => {
-          console.log(err);
+          console.log(`Ошибка при получении фильмов (${err})`);
+          alert(`Ошибка при получении фильмов (${err})`);
         })
         .finally(() => setIsPreloader(false));
     } else {
@@ -52,7 +54,8 @@ function Movies({ loggedIn }) {
           setAllMovies(data);
         })
         .catch((err) => {
-          console.log(err);
+          console.log(`Ошибка при получении фильмов (${err})`);
+          alert(`Ошибка при получении фильмов (${err})`);
         });
     }
   }, [loggedIn, currentUser]);
@@ -94,7 +97,8 @@ function Movies({ loggedIn }) {
         setSavedMovies([data, ...savedMovies]);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(`Ошибка при получении сохранненых фильмов (${err})`);
+        alert(`Ошибка при получении сохранненых фильмов (${err})`);
       });
   }
 
