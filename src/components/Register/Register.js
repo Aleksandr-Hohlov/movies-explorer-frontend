@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import './Register.css';
 import logo from '../../images/logo__header.svg';
 import { useForm } from 'react-hook-form';
+import StatusMessage from '../../utils/StatusMessage/StatusMessage';
 
-function Register({ handleRegister, loggedIn }) {
+function Register({ handleRegister, loggedIn, isActiveMessage, message, requestStatus }) {
   const {
     register,
     handleSubmit,
@@ -18,6 +19,7 @@ function Register({ handleRegister, loggedIn }) {
   if (loggedIn) {
     return (
       <main className="register">
+        <StatusMessage isActiveMessage={isActiveMessage} message={message} requestStatus={requestStatus} />
         <header className="register__header">
           <Link className="register__header-link" to="/">
             <img className="register__header-logo" src={logo} alt="Лого"></img>

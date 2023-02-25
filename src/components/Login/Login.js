@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import './Login.css';
 import logo from '../../images/logo__header.svg';
+import StatusMessage from '../../utils/StatusMessage/StatusMessage';
 
-function Login({ handleLogin, loggedIn }) {
+function Login({ handleLogin, loggedIn, isActiveMessage, message, requestStatus }) {
   const {
     register,
     handleSubmit,
@@ -20,12 +21,14 @@ function Login({ handleLogin, loggedIn }) {
   if (loggedIn) {
     return (
       <main className="login">
+        <StatusMessage isActiveMessage={isActiveMessage} message={message} requestStatus={requestStatus} />
         <header className="login__header">
           <Link className="login__header-link" to="/">
             <img className="login__header-logo" src={logo} alt="Лого" />
           </Link>
           <h1 className="login__header-title">Рады видеть!</h1>
         </header>
+
         <fieldset className="login__fieldset">
           <form className="login__form" noValidate onSubmit={handleSubmit(onSubmit)}>
             <h3 className="login__form-title">E-mail</h3>
