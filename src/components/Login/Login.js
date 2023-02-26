@@ -10,12 +10,10 @@ function Login({ handleLogin, loggedIn, isActiveMessage, message, requestStatus 
     register,
     handleSubmit,
     formState: { errors, isValid },
-    reset,
   } = useForm({ mode: 'onChange' });
 
   function onSubmit(data) {
     handleLogin(data.email, data.password);
-    reset();
   }
 
   if (loggedIn) {
