@@ -25,4 +25,7 @@
 
 ---
 
-![Скрин проекта](./images/screencapture.png)
+![Скрин movies](./src/images/screencapture-movies.png)
+![Скрин saved-movies](./src/images/screencapture-saved-movies.png)
+![screencapture-profile](./src/images/screencapture-profile.png)
+![screencapture-signup](./src/images/screencapture-signup.png)
