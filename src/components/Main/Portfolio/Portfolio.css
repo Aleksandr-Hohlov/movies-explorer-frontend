@@ -42,9 +42,26 @@
 
 .portfolio__element-link:hover {
   opacity: .8;
+  font-size: 31px;
 }
 
-@media screen and (max-width: 500px) {
+.portfolio__element-link-github {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 35px;
+  transition: .3s;
+  color: #A0A0A0;
+  text-decoration: none;
+  position: absolute;
+  margin-top: 35px;
+}
+
+.portfolio__element-link-github:hover{
+  text-decoration: underline;
+  opacity: .8;
+}
+
+@media screen and (max-width: 600px) {
   .portfolio__list {
     font-size: 18px;
     line-height: 28px;
@@ -53,5 +70,14 @@
   .portfolio__element-link {
     background-size: 18px;
     background-position: 100% 20%;
+  }
+
+  .portfolio__element-link:hover {
+    font-size: 19px;
+  }
+
+  .portfolio__element-link-github {
+    font-size: 11px;
+    margin-top: 15px;
   }
 }

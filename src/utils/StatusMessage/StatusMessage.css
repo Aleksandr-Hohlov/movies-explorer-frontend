@@ -18,7 +18,7 @@
   visibility: hidden;
   z-index: 1;
   width: 0;
-  /* transition: 0.3s width; */
+  transition: 0.3s width;
   border-radius: 20px;
   height: 38px;
   overflow: hidden;

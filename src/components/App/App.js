@@ -39,7 +39,6 @@ function App() {
         })
         .catch((err) => {
           console.log(`Ошибка при получении данных о профиле (${err})`);
-          alert(`Ошибка при получении данных о профиле (${err})`);
           setCurrentUser({});
         })
         .finally(() => {
@@ -88,7 +87,6 @@ function App() {
         setIsActiveMessage(true);
         setRequestStatus(false);
         console.log(`Ошибка при входе (${err})`);
-        // alert(`Ошибка при входе (${err})`);
       })
       .finally(() => {
         setTimeout(() => setIsActiveMessage(false), 3000);
@@ -186,18 +184,3 @@ function App() {
 }
 
 export default App;
-
-/*
-
- <Route path="/signin">
-              <Login handleLogin={handleLogin} />
-            </Route>
-
-            <Route path="/signup">
-              <Register handleRegister={handleRegister} />
-            </Route>
-
-
-                       <ProtectedRoute path="/signin" exact loggedIn={!loggedIn} component={Login} handleLogin={handleLogin}/>
-            <ProtectedRoute path="/signup" exact loggedIn={!loggedIn} component={Register} handleRegister={handleRegister}/>
-*/

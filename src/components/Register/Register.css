@@ -45,10 +45,6 @@
   box-sizing: border-box;
 }
 
-.register__form-input_error {
-  color: #EE3465;
-}
-
 .register__input-error {
   font-style: normal;
   font-weight: 400;
@@ -57,7 +53,7 @@
   color: #EE3465;
   position: absolute;
   margin-top: 50px;
-  margin-left: -396px;
+  margin-left: -100%;
 }
 
 .register__button {
@@ -137,6 +133,5 @@
     font-size: 12px;
     line-height: 15px;
   }
-
-
 }
+

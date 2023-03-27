@@ -8,6 +8,7 @@ import { movieApi } from '../../utils/MovieApi';
 import { mainApi } from '../../utils/MainApi';
 import Preloader from '../../utils/Preloader/Preloader';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import StatusMessage from '../../utils/StatusMessage/StatusMessage';
 
 function Movies({ loggedIn }) {
   const [filteredMovies, setFilteredMovies] = useState(['']);
@@ -16,6 +17,10 @@ function Movies({ loggedIn }) {
   const [shortMovies, setShortMovies] = useState(JSON.parse(localStorage.getItem('movies-short')));
   const [savedMovies, setSavedMovies] = useState([]);
   const currentUser = useContext(CurrentUserContext);
+  // Уведомления об ошибках
+  const [message, setMessage] = useState('');
+  const [isActiveMessage, setIsActiveMessage] = useState(false);
+  const [requestStatus, setRequestStatus] = useState(false);
 
   useEffect(() => {
     if (loggedIn) {
@@ -26,7 +31,12 @@ function Movies({ loggedIn }) {
         })
         .catch((err) => {
           console.log(`Ошибка при получении фильмов (${err})`);
-          alert(`Ошибка при получении фильмов (${err})`);
+          setMessage(`Ошибка при получении фильмов (${err})`);
+          setIsActiveMessage(true);
+          setRequestStatus(false);
+        })
+        .finally(() => {
+          setTimeout(() => setIsActiveMessage(false), 2000);
         });
     }
   }, [loggedIn, currentUser]);
@@ -44,9 +54,14 @@ function Movies({ loggedIn }) {
         })
         .catch((err) => {
           console.log(`Ошибка при получении фильмов (${err})`);
-          alert(`Ошибка при получении фильмов (${err})`);
+          setMessage(`Ошибка при получении фильмов (${err})`);
+          setIsActiveMessage(true);
+          setRequestStatus(false);
         })
-        .finally(() => setIsPreloader(false));
+        .finally(() => {
+          setIsPreloader(false);
+          setTimeout(() => setIsActiveMessage(false), 2000);
+        });
     } else {
       movieApi
         .getMovies()
@@ -55,7 +70,13 @@ function Movies({ loggedIn }) {
         })
         .catch((err) => {
           console.log(`Ошибка при получении фильмов (${err})`);
-          alert(`Ошибка при получении фильмов (${err})`);
+          setMessage(`Ошибка при получении фильмов (${err})`);
+          setIsActiveMessage(true);
+          setRequestStatus(false);
+        })
+        .finally(() => {
+          setIsPreloader(false);
+          setTimeout(() => setIsActiveMessage(false), 2000);
         });
     }
   }, [loggedIn, currentUser]);
@@ -90,35 +111,51 @@ function Movies({ loggedIn }) {
   }
 
   function handleSaveMovie(movie) {
-    console.log(movie);
     mainApi
       .saveMovie(movie)
       .then((data) => {
         setSavedMovies([data, ...savedMovies]);
       })
       .catch((err) => {
-        console.log(`Ошибка при получении сохранненых фильмов (${err})`);
-        alert(`Ошибка при получении сохранненых фильмов (${err})`);
+        console.log(`Ошибка при сохраннении фильмов (${err})`);
+        setMessage(`Ошибка при сохраннении фильмов (${err})`);
+        setIsActiveMessage(true);
+        setRequestStatus(false);
+      })
+      .finally(() => {
+        setTimeout(() => setIsActiveMessage(false), 2000);
       });
   }
 
   function handleCardDelete(movie) {
     const savedMovieId = savedMovies.find((m) => m.movieId === movie.id || m.movieId === movie.movieId);
-    mainApi.deleteMovie(savedMovieId._id).then(() => {
-      const newSavedMovies = savedMovies.filter((m) => {
-        if (movie.id === m.movieId || movie.movieId === m.movieId) {
-          return false;
-        } else {
-          return true;
-        }
+    mainApi
+      .deleteMovie(savedMovieId._id)
+      .then(() => {
+        const newSavedMovies = savedMovies.filter((m) => {
+          if (movie.id === m.movieId || movie.movieId === m.movieId) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+        setSavedMovies(newSavedMovies);
+      })
+      .catch((err) => {
+        console.log(`Ошибка при сохраннении фильмов (${err})`);
+        setMessage(`Ошибка при сохраннении фильмов (${err})`);
+        setIsActiveMessage(true);
+        setRequestStatus(false);
+      })
+      .finally(() => {
+        setTimeout(() => setIsActiveMessage(false), 2000);
       });
-      setSavedMovies(newSavedMovies);
-    });
   }
 
   return (
     <div className="movies">
       <Header />
+      <StatusMessage isActiveMessage={isActiveMessage} message={message} requestStatus={requestStatus} />
       <main className="movies__content">
         <SearchForm filter={filterMovie} handleShortFilms={handleShortFilms} shortMovies={shortMovies} />
         {isPreloader ? <Preloader /> : ''}

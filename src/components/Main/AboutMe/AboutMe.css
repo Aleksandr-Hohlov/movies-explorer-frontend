@@ -39,9 +39,13 @@
   font-size: 14px;
   line-height: 22px;
   mix-blend-mode: normal;
-  margin-bottom: 99px;
+  margin-bottom: 70px;
   margin-top: 0px;
   text-align: justify;
+}
+
+.about-me__text:first-of-type {
+  margin-bottom: 10px;
 }
 
 .about-me__github {
@@ -50,7 +54,6 @@
   line-height: 17px;
   transition: .3s;
   color: black;
-  text-decoration: none;
 }
 
 .about-me__github:hover {

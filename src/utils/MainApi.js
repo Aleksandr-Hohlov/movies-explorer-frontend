@@ -54,7 +54,6 @@ class MainApi {
 
   /* добавление фильма */
   saveMovie(movie) {
-    console.log(movie);
     return fetch(`${this._url}/movies`, {
       method: 'POST',
       headers: {
@@ -112,6 +111,10 @@ class MainApi {
     }).then((response) => this._checkResponse(response));
   }
 }
+
+// export const mainApi = new MainApi({
+//   url: 'http://localhost:3001',
+// });
 
 export const mainApi = new MainApi({
   url: 'https://api.movies-Hohlov.nomoredomains.club',

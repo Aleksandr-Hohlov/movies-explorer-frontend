@@ -26,10 +26,12 @@
 
 .header-movies__films_active {
   font-weight: 500;
+  text-decoration: underline;
 }
 
 .header-movies__films.active {
   font-weight: 500;
+  text-decoration: underline;
 }
 
 .header-movies__films:hover {
